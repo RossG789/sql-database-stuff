@@ -16,7 +16,7 @@ app.get("/", (req, res) => {
 
 app.get("/movies", (req, res) => {
   try {
-    if (req.query) {
+    if (req.query.id) {
       res.status(200).json();
       console.log("Thanks for the query!");
     }
