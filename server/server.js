@@ -27,6 +27,21 @@ app.get("/movies", (req, res) => {
   }
 });
 
+app.post("/movies", (req, res) => {
+  try {
+    const movie = req.body.movie;
+    const year = req.body.year;
+
+    const newMovie = db
+      .prepare(`INSERT INTO movies (movie, year) VALUES (?,?)`)
+      .run(movie, year);
+
+    res.status(200).json(newMovie);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`ԅ(≖‿≖ԅ) Server started on PORT: ${PORT}`);
 });

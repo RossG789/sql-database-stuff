@@ -5,15 +5,18 @@ const db = new Database("database.db");
 
 // Executes a sql query.
 // Always use ``
-db.exec(`CREATE TABLE IF NOT EXISTS movies (
+db.prepare(
+  `CREATE TABLE IF NOT EXISTS movies (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     movie TEXT,
     year INTEGER
-)`);
+)`
+).run();
 
 // Primary key -flagging our id as our records unique identifier
 
-db.exec(`
+db.prepare(
+  `
 INSERT into movies (movie, year)
 VALUES
 ('Black Narcissus', 1947),
@@ -21,4 +24,5 @@ VALUES
 ('Apocalypse Now', 1979),
 ('To Kill A Mockingbird', 1962),
 ('Taxi Driver', 1976),
-('Legend of the Fall', 1994)`);
+('Legend of the Fall', 1994)`
+).run();
