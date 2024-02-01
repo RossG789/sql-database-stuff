@@ -31,10 +31,11 @@ app.post("/movies", (req, res) => {
   try {
     const movie = req.body.movie;
     const year = req.body.year;
+    const imgUrl = req.body.imgURL;
 
     const newMovie = db
-      .prepare(`INSERT INTO movies (movie, year) VALUES (?,?)`)
-      .run(movie, year);
+      .prepare(`INSERT INTO movies (movie, year, imgURL) VALUES (?,?,?)`)
+      .run(movie, year, imgUrl);
 
     res.status(200).json(newMovie);
   } catch (err) {
