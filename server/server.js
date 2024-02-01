@@ -43,6 +43,33 @@ app.post("/movies", (req, res) => {
   }
 });
 
+app.delete("/movies/:id", (req, res) => {
+  try {
+    const id = req.params.id;
+
+    const deleteMovie = db.prepare(`DELETE FROM movies WHERE id= ?`).run(id);
+    res.status(200).json({ recordDeleted: deleteMovie });
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
+});
+
+app.put("/movies/:id", (req, res) => {
+  try {
+    const id = req.params.id;
+    const movie = req.body.movie;
+    const year = req.body.year;
+    const imgUrl = req.body.imgURL;
+
+    const updateMovies = db
+      .prepare(`UPDATE movies SET movie = ?, year = ?, imgURL = ? WHERE id = ?`)
+      .run(movie, year, imgUrl, id);
+    res.status(204).json({ messaged: updateMovies });
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`ԅ(≖‿≖ԅ) Server started on PORT: ${PORT}`);
 });
